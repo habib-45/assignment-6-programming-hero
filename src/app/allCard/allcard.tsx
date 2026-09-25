@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Icard } from '@/types/cardtype';
@@ -14,7 +13,7 @@ const CardN = ({ card }: IcardProps) => {
 
       <div className="bg-gray-800 rounded-2xl shadow-md text-left overflow-hidden border border-transparent hover:border-[#c2fb06] transition-all cursor-pointer h-full flex flex-col justify-between">
 
-        {/* Card Top / Image */}
+
         <div>
           <Image
             src={card.image}
@@ -25,7 +24,7 @@ const CardN = ({ card }: IcardProps) => {
           />
 
           <div className="p-4 flex flex-col gap-y-2">
-            {/* Muscle Group Badges */}
+
             <div className="flex gap-2 flex-wrap">
               {card.muscleGroups?.map((muscle: string) => (
                 <span
@@ -37,13 +36,10 @@ const CardN = ({ card }: IcardProps) => {
               ))}
             </div>
 
-            {/* Title & Equipment */}
             <h3 className="text-xl font-semibold text-white mt-1">{card.name}</h3>
             <p className="text-gray-400 text-sm">{card.equipment}</p>
           </div>
         </div>
-
-        {/* Card Bottom / Stats */}
         <div className="p-4 pt-0">
           <hr className="border-gray-700 mb-3" />
           <div className="flex justify-between cards-center text-sm text-gray-300">

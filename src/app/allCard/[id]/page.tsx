@@ -106,8 +106,6 @@ const CardIdN = async ({ params }: Detailtype) => {
                 </ol>
               </div>
             </div>
-
-            {/* Action Buttons Component */}
             <ActionButtons card={card} />
           </div>
 
