@@ -1,11 +1,15 @@
-import PlanPage from "./myplan/page";
-import SavedPage from "./workouts/page";
+import BannerPabe from '@/components/homepage/banner'
+import AllDatas from '@/components/homepage/caeds';
+
 
 export default function Home() {
   return (
     <div>
 
-      <SavedPage></SavedPage>
+      <BannerPabe></BannerPabe>
+
+      <AllDatas></AllDatas>
+
 
     </div>
   );
