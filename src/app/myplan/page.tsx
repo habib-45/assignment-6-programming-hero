@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Icard } from "@/types/cardtype";
+import toast from "react-hot-toast";
 
 function MyPlanContent() {
   const searchParams = useSearchParams();
@@ -41,12 +42,24 @@ function MyPlanContent() {
     loadItems();
   }, [activeTab, sortBy]);
 
-  const removeItem = (id: string | number) => {
+  // Item Remove handling with Toast
+  const removeItem = (id: string | number, name: string) => {
     const key = activeTab === "today" ? "todayPlan" : "savedPlan";
     const updated = items.filter((item) => String(item.id) !== String(id));
     localStorage.setItem(key, JSON.stringify(updated));
     setItems(updated);
+    
+    // Toast alert
+    toast.error(`${name} removed from ${activeTab === "today" ? "Today's Plan" : "Saved"}!`);
+    
+    // Trigger event to sync badge count in Navbar
     window.dispatchEvent(new Event("storage"));
+  };
+
+  // Mark as Done action with Toast
+  const handleMarkAsDone = (card: Icard) => {
+    removeItem(card.id, card.name);
+    toast.success(`Great job! ${card.name} completed! 🎉`);
   };
 
   const totalExercises = items.length;
@@ -186,12 +199,15 @@ function MyPlanContent() {
                     </button>
                   </Link>
 
-                  <button className="bg-[#c2fb06] hover:bg-[#b0e600] text-black font-extrabold px-4 py-2 rounded-xl text-xs transition-all flex items-center gap-1">
+                  <button
+                    onClick={() => handleMarkAsDone(card)}
+                    className="bg-[#c2fb06] hover:bg-[#b0e600] text-black font-extrabold px-4 py-2 rounded-xl text-xs transition-all flex items-center gap-1"
+                  >
                     ✓ Mark as Done
                   </button>
 
                   <button
-                    onClick={() => removeItem(card.id)}
+                    onClick={() => removeItem(card.id, card.name)}
                     className="p-2 text-[#8892a4] hover:text-red-400 transition-colors ml-1"
                     title="Remove"
                   >
