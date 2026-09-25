@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Icard } from "@/types/cardtype";
 
-export default function MyPlanPage() {
+function MyPlanContent() {
   const searchParams = useSearchParams();
   const tabParam = searchParams.get("tab");
 
@@ -14,7 +14,6 @@ export default function MyPlanPage() {
   const [sortBy, setSortBy] = useState<"Duration" | "Calories" | "Rating">("Duration");
   const [items, setItems] = useState<Icard[]>([]);
 
-  // URL tab handle
   useEffect(() => {
     if (tabParam === "saved") {
       setActiveTab("saved");
@@ -58,7 +57,6 @@ export default function MyPlanPage() {
     <div className="min-h-screen bg-[#070a12] text-white p-6 md:p-12 flex justify-center items-start font-sans">
       <div className="w-full max-w-6xl space-y-6">
         
-        {/* Header */}
         <div>
           <h1 className="text-3xl md:text-4xl font-extrabold tracking-wide uppercase">
             MY PLAN
@@ -101,7 +99,7 @@ export default function MyPlanPage() {
                   : "text-[#8892a4] hover:text-white"
               }`}
             >
-              Today Plan
+              Today's Plan
             </button>
             <button
               onClick={() => setActiveTab("saved")}
@@ -115,7 +113,6 @@ export default function MyPlanPage() {
             </button>
           </div>
 
-          {/* Sort Dropdown */}
           <div className="flex items-center gap-2">
             <span className="text-[#8892a4] text-xs font-semibold">Sort By</span>
             <select
@@ -130,7 +127,6 @@ export default function MyPlanPage() {
           </div>
         </div>
 
-        {/* Workout Items List */}
         <div className="space-y-4">
           {items.length === 0 ? (
             <div className="border border-dashed border-[#1e2738] rounded-2xl bg-[#0b0f19]/40 min-h-[320px] flex flex-col justify-center items-center text-center p-8 space-y-4">
@@ -152,7 +148,6 @@ export default function MyPlanPage() {
                 key={card.id}
                 className="bg-[#0b0f19] border border-[#161c2e] rounded-2xl p-4 md:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all hover:border-[#242e42]"
               >
-                {/* Left: Thumbnail & Details */}
                 <div className="flex items-center gap-4">
                   <div className="relative w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden bg-[#121826] flex-shrink-0">
                     <Image
@@ -184,7 +179,6 @@ export default function MyPlanPage() {
                   </div>
                 </div>
 
-                {/* Right: Actions */}
                 <div className="flex items-center gap-2 self-end md:self-center w-full md:w-auto justify-end">
                   <Link href={`/allCard/${card.id}`}>
                     <button className="bg-transparent hover:bg-[#161c2e] text-white border border-[#242e42] font-semibold px-4 py-2 rounded-xl text-xs transition-all">
@@ -211,5 +205,13 @@ export default function MyPlanPage() {
 
       </div>
     </div>
+  );
+}
+
+export default function MyPlanPage() {
+  return (
+    <Suspense fallback={<div className="p-10 text-white text-center">Loading...</div>}>
+      <MyPlanContent />
+    </Suspense>
   );
 }
