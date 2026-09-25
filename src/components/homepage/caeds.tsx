@@ -1,5 +1,4 @@
 import CardN from "@/app/allCard/allcard";
-import Allcard from "../shared/allcard";
 import { Icard } from "@/types/cardtype";
 
 const getWorkouts = async () => {
