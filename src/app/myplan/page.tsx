@@ -23,12 +23,10 @@ export default function MyPlanPage() {
     }
   }, [tabParam]);
 
-  // LocalStorage data load & sort
   const loadItems = () => {
     const key = activeTab === "today" ? "todayPlan" : "savedPlan";
     let data: Icard[] = JSON.parse(localStorage.getItem(key) || "[]");
 
-    // Sorting Logic
     if (sortBy === "Duration") {
       data.sort((a, b) => Number(b.duration || 0) - Number(a.duration || 0));
     } else if (sortBy === "Calories") {
@@ -44,7 +42,6 @@ export default function MyPlanPage() {
     loadItems();
   }, [activeTab, sortBy]);
 
-  // Item remove function
   const removeItem = (id: string | number) => {
     const key = activeTab === "today" ? "todayPlan" : "savedPlan";
     const updated = items.filter((item) => String(item.id) !== String(id));
@@ -53,7 +50,6 @@ export default function MyPlanPage() {
     window.dispatchEvent(new Event("storage"));
   };
 
-  // Stats calculation
   const totalExercises = items.length;
   const totalMinutes = items.reduce((acc, item) => acc + (Number(item.duration) || 0), 0);
   const totalCalories = items.reduce((acc, item) => acc + (Number(item.caloriesBurned) || 0), 0);
@@ -72,7 +68,6 @@ export default function MyPlanPage() {
           </p>
         </div>
 
-        {/* Top Summary Stats Cards */}
         <div className="grid grid-cols-3 bg-[#0b0f19] border border-[#161c2e] rounded-2xl p-6 divide-x divide-[#182032]">
           <div className="px-4 first:pl-2">
             <p className="text-[#8892a4] text-xs font-semibold mb-1">Exercises</p>
@@ -96,9 +91,7 @@ export default function MyPlanPage() {
           </div>
         </div>
 
-        {/* Controls: Tabs & Sort Dropdown */}
         <div className="flex justify-between items-center pt-2">
-          {/* Tabs */}
           <div className="bg-[#0b0f19] border border-[#161c2e] p-1 rounded-xl flex gap-1">
             <button
               onClick={() => setActiveTab("today")}
@@ -108,7 +101,7 @@ export default function MyPlanPage() {
                   : "text-[#8892a4] hover:text-white"
               }`}
             >
-              Today's Plan
+              Today Plan
             </button>
             <button
               onClick={() => setActiveTab("saved")}
