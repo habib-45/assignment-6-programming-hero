@@ -12,7 +12,6 @@ export default function NavBer() {
   const [planCount, setPlanCount] = useState(0);
   const [savedCount, setSavedCount] = useState(0);
 
-  // LocalStorage থেকে গণনা আপডেট করার ফাংশন
   const updateCounts = () => {
     if (typeof window !== "undefined") {
       const todayPlan = JSON.parse(localStorage.getItem("todayPlan") || "[]");
@@ -68,7 +67,6 @@ export default function NavBer() {
 
   return (
     <div className="navbar bg-[#070a12] text-white px-4 md:px-8 border-b border-[#161c2e]">
-      {/* Left: mobile menu and logo */}
       <div className="navbar-start">
         <div className="dropdown">
           <button
@@ -110,14 +108,11 @@ export default function NavBer() {
         </Link>
       </div>
 
-      {/* Desktop menu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 gap-2">{links}</ul>
       </div>
 
-      {/* Right side */}
       <div className="navbar-end flex gap-5">
-        {/* Plan এ ক্লিক করলে Today's Plan ট্যাবে নিয়ে যাবে */}
         <Link
           href="/myplan?tab=today"
           className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm font-semibold"
@@ -128,7 +123,6 @@ export default function NavBer() {
           </span>
         </Link>
 
-        {/* Saved এ ক্লিক করলে Saved ট্যাবে নিয়ে যাবে */}
         <Link
           href="/myplan?tab=saved"
           className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-semibold"
