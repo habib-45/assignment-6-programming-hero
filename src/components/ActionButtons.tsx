@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Icard } from "@/types/cardtype";
 
 
@@ -9,7 +9,6 @@ export default function ActionButtons({ card }: { card: Icard }) {
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    // LocalStorage থেকে বর্তমান স্টেট চেক করা
     const planItems = JSON.parse(localStorage.getItem("todayPlan") || "[]");
     const savedItems = JSON.parse(localStorage.getItem("savedPlan") || "[]");
 
@@ -21,12 +20,12 @@ export default function ActionButtons({ card }: { card: Icard }) {
     const existingData: Icard[] = JSON.parse(localStorage.getItem(key) || "[]");
     
     if (isCurrentlyActive) {
-      // রিমুভ করা
+  
       const updated = existingData.filter((item) => String(item.id) !== String(card.id));
       localStorage.setItem(key, JSON.stringify(updated));
       setStatus(false);
     } else {
-      // যুক্ত করা
+  
       const updated = [...existingData, card];
       localStorage.setItem(key, JSON.stringify(updated));
       setStatus(true);
